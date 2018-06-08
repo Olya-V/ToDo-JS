@@ -1,4 +1,4 @@
-((document) => {
+const main = ((document) => {
   const toDoForm = document.getElementById('todo-form');
   const addInput = document.getElementById('add-input');
   const todoList = document.getElementById('todo-list');
@@ -101,9 +101,8 @@
     todoItems.forEach(item => bindEvents(item));
   }
 
-  main();
+  return main;
 })(document);
-//для того, что бы модуль не общался с внешней средой передадим ему document
-//теперь мы не засоряем глобальное постранство
-//это еще не паттерн модуля, это просто модуль.
-//Чтобы был паттерн модуль из этой функции надо что-то вернуть
+//вернем функцию main и человек, который использует наш код вызовет ее
+//не засоряем глобальное пространство и функцию main можем отправить куда-то в другое место в прилоежнии
+main();
