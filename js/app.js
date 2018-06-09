@@ -25,7 +25,7 @@ const main = ((document) => {
     const element = document.createElement(tagName);
     Object.keys(props).forEach(key => element[key] = props[key]);
 
-    if (children.length > 0) {
+    if (children.length > 0) { // проверку можно опустить, тк если длинна массива = 0 то метод forEach не сработает.
       children.forEach(child => {
         if(typeof child === 'string') {
           child = document.createTextNode(child);
@@ -94,18 +94,14 @@ const main = ((document) => {
     deleteButton.addEventListener('click', deleteTodoItem)
   }
 
-//сейчас у нас нет данных. Данные - это дом-элемент. ПРоблема: если захотим сохранить их в локальное хранилище.
-// создадим две функции c помощью которых можно что-то загрузить, но у нас нет данных, нет массива с задачами.
-// у нас все сразу направляется в DOM-элементы, все хранится сразу в DOM.
-// наша логика, предствление и данные -  все в одной куче.
 
   function load() {
-    const data = JSON.parse(localStorage.getItem('todos')); // в local Storage сохраняется простая строка, а нам нужно получить данные.
+    const data = JSON.parse(localStorage.getItem('todos'));
     return data;
   }
 
   function save(data) {
-    const string = JSON.stringify(data); // здесь тк мы сохраняем, то сначала нужно поулчить строку
+    const string = JSON.stringify(data);
     localStorage.setItem('todos', string)
   }
 
@@ -121,7 +117,6 @@ const main = ((document) => {
 
   return main;
 })(document);
-//вернем функцию main и человек, который использует наш код вызовет ее
-//не засоряем глобальное пространство и функцию main можем отправить куда-то в другое место в прилоежнии
+
 main();
 
