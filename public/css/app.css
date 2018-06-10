@@ -3,6 +3,7 @@ body {
     color: #757575;
     font-family: 'Consolas', Arial, Helvetica, sans-serif;
     margin: 0;
+    padding: 1em;
 }
 
 ul {
@@ -81,7 +82,7 @@ input {
 
 main {
     background: #fff;
-    width: 700px;
+    max-width: 700px;
     margin: 70px auto;
     border-radius: 2px;
     overflow: hidden;
@@ -132,20 +133,23 @@ header h1 {
     margin-right: auto;
 }
 
+.todo-item .textfield {
+    display: none;
+}
+
 .todo-item.completed .title {
     text-decoration: line-through;
 }
 
+.todo-item.editing .checkbox,
 .todo-item.editing .title {
-    display: none;
-}
-
-.todo-item .textfield {
     display: none;
 }
 
 .todo-item.editing .textfield {
     display: block;
+    flex: 1;
+    margin-right: 16px;
 }
 
 .todo-item button {
