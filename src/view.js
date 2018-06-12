@@ -54,7 +54,7 @@ class View extends EventEmitter{
   }
 
   handleEdit({ target }) {
-    const  listItem = target.parentNode;
+    const listItem = target.parentNode;
     const id = listItem.getAttribute('data-id');
     const label = listItem.querySelector('.title');
     const input = listItem.querySelector('.textfield');
@@ -136,11 +136,18 @@ class View extends EventEmitter{
     listItem.classList.remove('editing');
   }
 
-
    removeItem(id) {
      const listItem = this.findListItem(id);
 
      this.list.removeChild(listItem);
+   }
+
+   show(todos) {
+    todos.forEach(todo => {
+      const listItem = this.createElement(todo);
+
+      this.list.appendChild(listItem);
+    })
    }
 }
 

@@ -40,4 +40,17 @@ class EventEmitter {
   }
 }
 
-export { createElement, EventEmitter };
+
+function save(data) {
+  const string = JSON.stringify(data);
+  localStorage.setItem('todos', string);
+}
+
+function load() {
+  const string = localStorage.getItem('todos');
+  const data = JSON.parse(string); // переводит строку в объект
+
+  return data;
+}
+
+export { createElement, EventEmitter, save, load };

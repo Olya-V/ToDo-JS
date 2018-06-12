@@ -1,5 +1,9 @@
-class Model {
+import { EventEmitter} from './helpers';
+
+class Model extends EventEmitter {
   constructor(state = []) {
+    super();
+
     this.state = state;
   }
 
@@ -11,6 +15,7 @@ class Model {
   // метод для добавления данных в состояние
   addItem(item) {
     this.state.push(item);
+    this.emit('change', this.state);
     return item;
   }
 
@@ -20,6 +25,7 @@ class Model {
                                     //перемерем свойства data, которые мы получили и все свойства и их значения запишем в объект item
     Object.keys(data).forEach(prop => item[prop] = data[prop]); // получим все свойства объекта с данными - обратно поулчим массив и переберем его с помощью метода forEach
 
+    this.emit('change', this.state);
     return item;
   }
 
@@ -28,6 +34,7 @@ class Model {
 
     if(index > -1) { // если индекс = -1, то элемент в массиве не найден
       this.state.splice(index, 1);
+      this.emit('change', this.state);
     }
   }
 }
