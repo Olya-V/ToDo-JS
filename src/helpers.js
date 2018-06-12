@@ -1,7 +1,13 @@
 function createElement(tag, props, ...children) {
   const element = document.createElement(tag);
 
-  Object.keys(props).forEach(key => element[key] = props[key]);
+  Object.keys(props).forEach(key => {
+    if (key.startsWith('data-')) {
+      element.setAttribute(key, props[key]);
+    } else {
+      element[key] = props[key];
+    }
+  });
 
   children.forEach(child => {
       if (typeof child === 'string') {
@@ -17,8 +23,8 @@ function createElement(tag, props, ...children) {
 class EventEmitter {
   constructor() {
     this.events =  {  // список событий у объекта
-      'add': [callback, callback, callback], // в качестве значения - массив функций, кторые необходимо вызвать на это событие
-      'edit': [callback, callback, callback]
+      'add': [], // в качестве значения - массив функций, кторые необходимо вызвать на это событие
+      'edit': []
     };
   }
 
@@ -28,8 +34,8 @@ class EventEmitter {
   }
 
   emit(type, arg) { // принимает тип события, которое необходимо запустить и аргументы
-    if (this.event[type]) { // посмотрим, есть ли что вызывать
-      this.events[type].forEach(callbakc => callback(arg)); // если есть, то мы вызвовем все методы по очереди
+    if (this.events[type]) { // посмотрим, есть ли что вызывать
+      this.events[type].forEach(callback => callback(arg)); // если есть, то мы вызвовем все методы по очереди
     }
   }
 }

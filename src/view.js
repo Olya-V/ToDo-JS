@@ -27,7 +27,7 @@ class View extends EventEmitter{
     return this.addEventListeners(item); //подпишем все части элемента на события
   }
 
-  addEventListeners(item){
+  addEventListeners(listItem){
     const checkbox = listItem.querySelector('.checkbox');
     const editButton = listItem.querySelector('button.edit');
     const removeButton = listItem.querySelector('button.remove');
@@ -36,16 +36,16 @@ class View extends EventEmitter{
     // метод обработчик события - это метод у объекта представления HandleToggle
     //Но просто так указать метод как this.HandleToggle нельзя. Его нужно предварительно привязать к экземпляру класса - объекту, который будет создан на основе класса View.
     // Это делается с помощью метода bind(this)
-    editButton.addEventListener('ckick', this.handleEdit.bind(this));
-    removeButton.addEventListener('ckick', this.handleRemove.bind(this));
+    editButton.addEventListener('click', this.handleEdit.bind(this));
+    removeButton.addEventListener('click', this.handleRemove.bind(this));
 
-    return item;
+    return listItem;
   }
 
   handleToggle({ target }) { //тк это обработчик события, то в качестве параметра у него событие evt, но мы сразу из объекта событие вытащим свойство target с помощью реструктуризации
     const  listItem = target.parentNode;  //этот метод мы отправляем в чекбокс, чекбокс это evt.target, значит получить доступ к li мы можем как к родителю чекбокса
     const id = listItem.getAttribute('data-id');
-    const completed = target.completed; //посмотрим, отмечен ли чекбокс
+    const completed = target.checked; //посмотрим, отмечен ли чекбокс
 
     //мы нажали на чекбокс, получили данные о задаче (id и состояние чекбокса)
     // а дальше нужно обновиться данные в модели. НО представление ничего не знает про модель.
@@ -81,7 +81,7 @@ class View extends EventEmitter{
   handleAdd(evt) {
     evt.preventDefault();
 
-    if(this.input.value ){ // проверим, ввел ли что-то пользователь
+    if(this.input.value == ''){ // проверим, ввел ли что-то пользователь
       return alert('Необходимо ввести название задачи');
     }
 
@@ -138,7 +138,7 @@ class View extends EventEmitter{
 
 
    removeItem(id) {
-     const listItem = this.findListItem(todo.id);
+     const listItem = this.findListItem(id);
 
      this.list.removeChild(listItem);
    }
