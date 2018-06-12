@@ -10,7 +10,7 @@ function createElement(tag, props, ...children) {
   });
 
   children.forEach(child => {
-      if (typeof child === 'string') {
+      if (typeof child == 'string') {
           child = document.createTextNode(child);
       }
 
@@ -22,20 +22,22 @@ function createElement(tag, props, ...children) {
 
 class EventEmitter {
   constructor() {
-    this.events =  {  // список событий у объекта
-      'add': [], // в качестве значения - массив функций, кторые необходимо вызвать на это событие
+    this.events =  {
+      'add': [],
       'edit': []
     };
   }
 
-  on(type, callback) { // для подписки на событие, принимает ип события, на которое нужно подписаться и функцию обработчик
-    this.events[type] = this.events[type] || []; //проверить есть ли уже какая-то функция колбэк на это событие. Если доступ к свойству что-то вернет, укажет это или пустой массив
+
+  on(type, callback) {
+    this.events[type] = this.events[type] || [];
     this.events[type].push(callback);
   }
 
-  emit(type, arg) { // принимает тип события, которое необходимо запустить и аргументы
-    if (this.events[type]) { // посмотрим, есть ли что вызывать
-      this.events[type].forEach(callback => callback(arg)); // если есть, то мы вызвовем все методы по очереди
+
+  emit(type, arg) {
+    if (this.events[type]) {
+      this.events[type].forEach(callback => callback(arg));
     }
   }
 }
@@ -46,9 +48,10 @@ function save(data) {
   localStorage.setItem('todos', string);
 }
 
+
 function load() {
   const string = localStorage.getItem('todos');
-  const data = JSON.parse(string); // переводит строку в объект
+  const data = JSON.parse(string);
 
   return data;
 }

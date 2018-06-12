@@ -3,7 +3,7 @@ import View from './view';
 import Controller from './controller';
 import { save, load } from  './helpers';
 
-const state = load(); // загружаем данные из хранилища
+const state = load();
 
 const model = new Model(state || undefined);
 model.on('change', state => save(state));
