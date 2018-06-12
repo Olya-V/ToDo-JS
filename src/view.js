@@ -1,7 +1,9 @@
-import {createElement} from './helpers';
+import { createElement, EventEmitter } from './helpers';
 
-class View {
+class View extends EventEmitter{
   constructor() {
+    super();
+
     this.form = document.getElementById('todo-form');
     this.input = document.getElementById('add-input');
     this.list = document.getElementById('todo-list');
@@ -48,7 +50,7 @@ class View {
     //мы нажали на чекбокс, получили данные о задаче (id и состояние чекбокса)
     // а дальше нужно обновиться данные в модели. НО представление ничего не знает про модель.
 
-    //update model
+    this.emit('toggle', { id, completed })//update model
   }
 
   handleEdit({ target }) {
@@ -61,7 +63,7 @@ class View {
     const isEditing = listItem.classList.contains('editing'); //вторая часть метода, первая часть в методе editItem
 
     if(isEditing) { //если мы находимся в режиме редактирования
-      // update model
+      this.emit('edit', { id, title});// update model
     } else { // если не находимся в режиме редактирования, то в него нужно войти
       input.value = label.textContent;
       editButton.textContent = 'Сохранить';
@@ -71,8 +73,9 @@ class View {
 
   handleRemove({ target }) {
     const  listItem = target.parentNode;
+    const id = listItem.getAttribute('data-id');
 
-    // remove item from model
+    this.emit('remove', id)// remove item from model
   }
 
   handleAdd(evt) {
@@ -84,7 +87,7 @@ class View {
 
     const value = this.input.value;
 
-    // add item to model
+    this.emit('add', value)// add item to model
   }
 
 
